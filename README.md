@@ -43,7 +43,7 @@ The Crop Yield Prediction System is a machine learning-powered web application d
 # Installation
 Clone the repository and install the dependencies:
 
-git clone https://github.com/your-username/crop-yield-predictor.git
+git clone https://github.com/KVHarsha2611/crop_yield_predictor.git
 cd crop-yield-predictor
 pip install -r requirements.txt
 
