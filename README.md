@@ -1,128 +1,96 @@
-# 🌾Crop Yield Prediction using Machine Learning 
-🖼
-![crop prediction image](https://github.com/Tinu01kumar/Crop_prediction_ml_pipeline/blob/main/templates/Screenshot%20(270).png)
+![image](https://github.com/user-attachments/assets/a8a396d5-1d67-4e52-a38f-0816b22f8303)
 
-## Overview
+# Overview
 
-This project aims to predict the quantity of production for various types of crops using Machine Learning. 
-The project consists of four main components:
+The Crop Yield Prediction System is a machine learning-powered web application designed to predict crop yields based on environmental, soil, and crop parameters. It helps farmers, researchers, and policymakers with accurate predictions, enabling better agricultural planning and productivity.
 
-- Data Ingestion, 
-- Data Transformation, 
-- Model Training, 
-- Prediction Pipeline.
-  
+# Project Structure
 
-## Project Structure
+├── app.py 
 
- **src/:**  Contains the main application code and prediction pipeline.<br>
- 
- **components/:** Contains modules for data ingestion, data transformation, and model training.
- pipeline.<br>
- 
- **pipeline/:** Contains two main pipelines - prediction_pipeline and train_pipeline.<br>
- 
- **logs/:** Folder to store logs generated during the project.<br>
- 
- **utils/:** Contains utility functions for logging, exception handling,  saving/loading objects and extracting data from mongodb.<br>
- 
- **exception/:** To handle exceptions and raise custom exceptions with detailed error messages.
+├── templates/
 
+│   └── index.html
 
-## Installation
-To install the required packages, run:
+├── static/
+
+│   ├── css/
+
+│   └── js/
+
+├── models/
+
+│   └── trained_model.pkl
+
+├── data/
+
+│   └── mongo_ingested_data.csv
+
+├── src/
+
+│   ├── data_ingestion.py
+
+│   ├── data_transformation.py
+
+│   ├── model_trainer.py
+
+│   ├── evaluation.py
+
+│   └── prediction_pipeline.py
+
+└── requirements.txt
+
+# Installation
+Clone the repository and install the dependencies:
+
+git clone https://github.com/your-username/crop-yield-predictor.git
+cd crop-yield-predictor
 pip install -r requirements.txt
-- numpy==1.26.4
-- pandas==2.2.2
-- flask==3.0.3
-- scikit-learn==1.4.2
-- seaborn==0.13.2
-- pymongo==4.6.3
-- datetime==5.5
 
+Start the Flask application:
 
-## Pipeline Overview
-The project pipeline consists of the following stages:
+python app.py
+Access the app by visiting: http://127.0.0.1:5000/
 
-**Data Ingestion:** Connect to MongoDB and retrieve the dataset.<br>
+# Pipeline Overview
+The project is modularly designed with independent components for ingestion, transformation, model training, evaluation, and prediction. Scikit-learn pipelines ensure a smooth flow from raw data to final predictions.
 
-**Data Preprocessing:** Handle missing values, scale numerical features, and encode categorical features.<br>
+# Data Ingestion
+The data_ingestion.py module handles data fetching from a MongoDB collection and saves it as a CSV file locally. This ensures the model always uses updated and clean data.
 
-**Model Training:** Train various regression models to predict crop yields.<br>
+# Data Transformation
+The data_transformation.py module processes the data by handling missing values, scaling numerical features, and encoding categorical variables using scikit-learn pipelines to ensure consistency between training and prediction stages.
 
-**Model Evaluation:** Evaluate the trained models using R-squared score.<br>
+# Model Training
+The model_trainer.py module trains multiple regression models including Linear Regression, Ridge, Lasso, ElasticNet, Decision Tree, and Random Forest. After hyperparameter tuning, Random Forest achieved the best results.
 
-**Prediction:** Deploy the best-performing model for crop yield prediction via a web interface.<br>
+# Evaluation
+The evaluation.py module compares the model performances using R² Score and Root Mean Squared Error (RMSE). Random Forest achieved an R² score of 0.93+, making it the selected model for deployment.
 
+# Prediction Pipeline
+The prediction_pipeline.py connects the trained ML model to the Flask app. It takes user input from the frontend, processes it through the same transformation steps, and predicts the crop yield.
 
-## Data Ingestion
-**Data Source:** The dataset is retrieved from a MongoDB database. It includes features such as nutrient levels (N, P, K), pH, rainfall, temperature, area in hectares, state name, crop type, and crop.<br>
+# How to Run
+Ensure MongoDB is installed and connected properly if data ingestion is required.
 
-**Process**
-- Connect to MongoDB and retrieve data.
-- Save the data as a CSV file.
-- Split the data into training and testing sets.
+Train the model using scripts inside src/ if not already trained.
 
-## Data Transformation
-**Preprocessing:** The data undergoes the following preprocessing steps:<br>
+Start the Flask server:
 
-**Imputation:**  Missing values are imputed using median for numerical features and most frequent value for categorical features.<br>
+python app.py
+Open http://127.0.0.1:5000/ in your browser.
 
-**Scaling:** Numerical features are scaled using StandardScaler.<br>
+Fill out the form with soil and climate parameters to get the predicted crop yield.
 
-**Encoding:** Categorical features are encoded using OrdinalEncoder.<br>
+# Dataset
+The dataset was sourced from MongoDB and contains:
 
+Soil features: pH, Nitrogen (N), Phosphorus (P), Potassium (K)
 
+Climate features: Temperature, Humidity, Rainfall
 
-**Pipeline:** The preprocessing steps are combined into a pipeline using ColumnTransformer.
+Crop name and State name
 
-## Model Training
-**Models Used**
-Several regression models are trained and evaluated:
-- Linear Regression
-- Ridge Regression
-- Lasso Regression
-- ElasticNet Regression
-- Decision Tree Regression
-- Random Forest Regression
+Historical crop yield values as the target
 
-
-
-## Evaluation
-The models are evaluated using R-squared score on the test set. The best-performing model is saved for future predictions.
-
-
-
-## Prediction Pipeline
-
-The **prediction_pipeline** folder contains the following components:<br>
-
-**PredictPipeline Class:** This class loads the preprocessed data and the trained model to make predictions.<br>
-
-**CustomData Class:** This class takes input features and converts them into a DataFrame suitable for prediction.<br>
-
-
-## Deployment
-The project has been deployed on an AWS EC2 instance and is accessible via the following link:
-
-
-**[http://ec2-52-70-34-66.compute-1.amazonaws.com:8050/predict](http://ec2-52-70-34-66.compute-1.amazonaws.com:8050/predict)**
-
-## Usage
-To run the prediction web application locally, execute:
-**python app.py**
-Visit **[http://localhost:5000](http://127.0.0.1:5000/)** in your web browser to use the application.
-
-## Dataset
-The dataset used in this project is taken from Kaggle and can be found here.
-
-**[https://www.kaggle.com/datasets/asishpandey/crop-production-in-india?select=Crop_production.csv](https://www.kaggle.com/datasets/asishpandey/crop-production-in-india?select=Crop_production.csv)**
-
-
-
-
-
-
-
-
-
+The dataset underwent preprocessing steps such as outlier removal, scaling, and encoding to ensure the highest model performance.
