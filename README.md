@@ -44,7 +44,9 @@ The Crop Yield Prediction System is a machine learning-powered web application d
 Clone the repository and install the dependencies:
 
 git clone https://github.com/KVHarsha2611/crop_yield_predictor.git
+
 cd crop-yield-predictor
+
 pip install -r requirements.txt
 
 Start the Flask application:
@@ -78,6 +80,7 @@ Train the model using scripts inside src/ if not already trained.
 Start the Flask server:
 
 python app.py
+
 Open http://127.0.0.1:5000/ in your browser.
 
 Fill out the form with soil and climate parameters to get the predicted crop yield.
